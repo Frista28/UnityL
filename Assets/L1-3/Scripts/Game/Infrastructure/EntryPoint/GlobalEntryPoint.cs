@@ -1,7 +1,5 @@
 using System.Collections;
 using L1_3.Scripts.Game.DI;
-using L1_3.Scripts.Game.Gameplay.Subsequence;
-using L1_3.Scripts.Game.Infrastructure.Gameplay;
 using L1_3.Scripts.Game.Utilities.CoroutineManagement;
 using L1_3.Scripts.Game.Utilities.LoadingScreen;
 using L1_3.Scripts.Game.Utilities.SceneManagement;
@@ -37,9 +35,8 @@ namespace L1_3.Scripts.Game.Infrastructure.EntryPoint
             Debug.Log("Завершается инициализация сервисов");
 
             loadingScreen.Hide();
-
-            GameplaySceneContext context = new GameplaySceneContext(SubsequenceType.Chars);
-            yield return sceneSwitcherService.ProcessSwitchTo(Scenes.Gameplay, context);
+            
+            yield return sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu, new SceneContext());
         }
     }
 }
