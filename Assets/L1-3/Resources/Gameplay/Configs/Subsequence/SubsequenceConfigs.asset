@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 266688cc7e104231bc35e956c2ced496, type: 3}
   m_Name: SubsequenceConfigs
   m_EditorClassIdentifier: 
-  <Numbers>k__BackingField: {fileID: 0}
-  <Chars>k__BackingField: {fileID: 0}
+  <Length>k__BackingField: 6
+  <Numbers>k__BackingField: {fileID: 11400000, guid: 7291e3d3ac9bfe743b353f792cac2f10,
+    type: 2}
+  <Chars>k__BackingField: {fileID: 11400000, guid: 9ddd5844edb3a2348b0a4b42a492e2ee,
+    type: 2}
