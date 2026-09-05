@@ -1,5 +1,6 @@
 ﻿using L1_3.Scripts.Game.DI;
 using L1_3.Scripts.Game.Utilities.AssetsManagement;
+using L1_3.Scripts.Game.Utilities.ConfigsManagement;
 using L1_3.Scripts.Game.Utilities.CoroutineManagement;
 using L1_3.Scripts.Game.Utilities.LoadingScreen;
 using L1_3.Scripts.Game.Utilities.SceneManagement;
@@ -22,6 +23,8 @@ namespace L1_3.Scripts.Game.Infrastructure.EntryPoint
             container.RegisterAsSingle(CreateLoadingScreen);
             
             container.RegisterAsSingle(CreateSceneBootstrapRegistry);
+            
+            container.RegisterAsSingle(CreateConfigsProviderService);
         }
 
         private static SceneSwitcherService CreateSceneSwitcherService(DIContainer container)
@@ -54,6 +57,15 @@ namespace L1_3.Scripts.Game.Infrastructure.EntryPoint
                 .Load<StandardLoadingScreen>("Utilities/LoadingScreen");
 
             return Object.Instantiate(standardLoadingScreenPrefab);
+        }
+
+        private static ConfigsProviderService CreateConfigsProviderService(DIContainer container)
+        {
+            ResourcesAssetsLoader resourcesAssetsLoader = container.Resolve<ResourcesAssetsLoader>();
+            
+            IConfigsLoader configsLoader = new ResourcesConfigsLoader(resourcesAssetsLoader);
+            
+            return new ConfigsProviderService(configsLoader);
         }
 
         private static SceneBootstrapRegistry CreateSceneBootstrapRegistry(DIContainer container)

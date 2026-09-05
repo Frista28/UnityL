@@ -1,5 +1,6 @@
 using System.Collections;
 using L1_3.Scripts.Game.DI;
+using L1_3.Scripts.Game.Utilities.ConfigsManagement;
 using L1_3.Scripts.Game.Utilities.CoroutineManagement;
 using L1_3.Scripts.Game.Utilities.LoadingScreen;
 using L1_3.Scripts.Game.Utilities.SceneManagement;
@@ -28,7 +29,7 @@ namespace L1_3.Scripts.Game.Infrastructure.EntryPoint
 
             Debug.Log("Начинается инициализация сервисов");
 
-            // yield return container.Resolve<ConfigsProviderService>().LoadAsync();
+            yield return container.Resolve<ConfigsProviderService>().LoadAsync();
 
             yield return new WaitForSeconds(1f);
 

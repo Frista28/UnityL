@@ -2,6 +2,7 @@
 using System.Collections;
 using L1_3.Scripts.Game.DI;
 using L1_3.Scripts.Game.Gameplay.Subsequence;
+using L1_3.Scripts.Game.Utilities.CoroutineManagement;
 using L1_3.Scripts.Game.Utilities.SceneManagement;
 using UnityEngine;
 
@@ -35,7 +36,17 @@ namespace L1_3.Scripts.Game.Infrastructure.Gameplay
         {
             Debug.Log("Запуск геймплея");
             SubsequenceGenerator generator = _container.Resolve<SubsequenceGenerator>();
-            Debug.Log(generator.Generate(_gameplaySceneContext.SubsequenceType, 6));
+            Debug.Log(generator.Generate(_gameplaySceneContext.SubsequenceType));
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                SceneSwitcherService sceneSwitcherService = _container.Resolve<SceneSwitcherService>();
+                ICoroutinesPerformer coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
+                coroutinesPerformer.StartPerform(sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu, new SceneContext()));
+            }
         }
     }
 }

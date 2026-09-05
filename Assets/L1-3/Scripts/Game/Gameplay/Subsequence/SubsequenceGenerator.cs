@@ -1,18 +1,30 @@
 ﻿using System;
+using L1_3.Scripts.Game.DI;
+using L1_3.Scripts.Game.Gameplay.Subsequence.Config;
+using L1_3.Scripts.Game.Utilities.ConfigsManagement;
 using Random = UnityEngine.Random;
 
 namespace L1_3.Scripts.Game.Gameplay.Subsequence
 {
     public class SubsequenceGenerator
     {
-        public string Generate(SubsequenceType subsequenceType, int length)
+        private readonly SubsequenceConfigs _subsequenceConfigs;
+        
+        public SubsequenceGenerator(DIContainer container)
+        {
+            _subsequenceConfigs = container.Resolve<ConfigsProviderService>().GetConfig<SubsequenceConfigs>();
+        }
+        
+        public string Generate(SubsequenceType subsequenceType)
         {
             string items = subsequenceType switch
             {
-                SubsequenceType.Number => "123",
-                SubsequenceType.Chars => "qwerty",
+                SubsequenceType.Number => _subsequenceConfigs.Numbers.Subsequence,
+                SubsequenceType.Chars => _subsequenceConfigs.Chars.Subsequence,
                 _ => throw new ArgumentException("Invalid SubsequenceType")
             };
+            
+            int length = _subsequenceConfigs.Length;
             
             char[] generatedChars = new char[length];
 

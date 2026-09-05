@@ -10,6 +10,6 @@ namespace L1_3.Scripts.Game.Infrastructure.Gameplay
             container.RegisterAsSingle(CreateSubsequenceGenerator);
         }
 
-        private static SubsequenceGenerator CreateSubsequenceGenerator(DIContainer container) => new SubsequenceGenerator();
+        private static SubsequenceGenerator CreateSubsequenceGenerator(DIContainer container) => new SubsequenceGenerator(container);
     }
 }
