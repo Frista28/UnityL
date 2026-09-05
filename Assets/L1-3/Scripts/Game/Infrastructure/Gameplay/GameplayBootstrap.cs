@@ -13,6 +13,8 @@ namespace L1_3.Scripts.Game.Infrastructure.Gameplay
         private DIContainer _container;
         private GameplaySceneContext _gameplaySceneContext;
         
+        private SubsequenceGameLoop _subsequenceGameLoop;
+        
         public void ProcessRegistrations(DIContainer container, SceneContext sceneContext)
         {
             Debug.Log("Регистрация геймплея");
@@ -29,14 +31,15 @@ namespace L1_3.Scripts.Game.Infrastructure.Gameplay
         public IEnumerator Initialize()
         {
             Debug.Log("Инициализация геймплея");
-            yield break;
+            
+            yield return _subsequenceGameLoop = _container.Resolve<SubsequenceGameLoop>();
         }
 
         public void Run()
         {
             Debug.Log("Запуск геймплея");
-            SubsequenceGenerator generator = _container.Resolve<SubsequenceGenerator>();
-            Debug.Log(generator.Generate(_gameplaySceneContext.SubsequenceType));
+            
+            _subsequenceGameLoop.Start(_gameplaySceneContext.SubsequenceType);
         }
 
         private void Update()
@@ -47,6 +50,13 @@ namespace L1_3.Scripts.Game.Infrastructure.Gameplay
                 ICoroutinesPerformer coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
                 coroutinesPerformer.StartPerform(sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu, new SceneContext()));
             }
+            
+            _subsequenceGameLoop.Update();
+        }
+
+        private void OnDestroy()
+        {
+            _subsequenceGameLoop.Dispose();
         }
     }
 }
