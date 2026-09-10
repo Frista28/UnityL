@@ -2,12 +2,14 @@
 
 namespace L1_3.Scripts.Game.DI
 {
-    public class Registration
+    public class Registration : IRegistrationOptions
     {
         private Func<DIContainer, object> _creator;
         private object _cachedInstance;
 
         public Registration(Func<DIContainer, object> creator) => _creator = creator;
+        
+        public bool IsNonLazy { get; private set; }
 
         public object CreateInstanceFrom(DIContainer container)
         {
@@ -21,5 +23,7 @@ namespace L1_3.Scripts.Game.DI
 
             return _cachedInstance;
         }
+
+        public void NonLazy() => IsNonLazy = true;
     }
 }
