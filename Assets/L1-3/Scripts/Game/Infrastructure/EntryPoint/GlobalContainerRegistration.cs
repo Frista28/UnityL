@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using L1_3.Scripts.Game.DI;
+using L1_3.Scripts.Game.Systems.Score;
 using L1_3.Scripts.Game.Systems.Wallet;
 using L1_3.Scripts.Game.Utilities.AssetsManagement;
 using L1_3.Scripts.Game.Utilities.ConfigsManagement;
@@ -41,6 +42,18 @@ namespace L1_3.Scripts.Game.Infrastructure.EntryPoint
             container.RegisterAsSingle(CreatePlayerDataProvider);
             
             container.RegisterAsSingle(CreateWalletService).NonLazy();
+            
+            container.RegisterAsSingle(CreateScoreCounter).NonLazy();
+        }
+
+        private static ScoreCounter CreateScoreCounter(DIContainer container)
+        {
+            Dictionary<ScoreTypes, ReactiveVariable<int>> scores = new();
+
+            foreach (ScoreTypes scoreTypes in Enum.GetValues(typeof(ScoreTypes)))
+                scores[scoreTypes] = new ReactiveVariable<int>();
+            
+            return new ScoreCounter(scores, container.Resolve<PlayerDataProvider>());
         }
         
         private static ISaveLoadService CreateSaveLoadService(DIContainer container)

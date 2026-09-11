@@ -11,6 +11,7 @@ namespace L1_3.Scripts.Game.Gameplay.Subsequence
         private readonly SubsequenceHandler _subsequenceHandler;
         private readonly SceneSwitcherService _sceneSwitcherService;
         private readonly ICoroutinesPerformer _coroutinesPerformer;
+        private readonly SubsequenceGameConditionProcessor _conditionProcessor;
 
         private readonly GameplaySceneContext _gameplaySceneContext;
         
@@ -19,6 +20,7 @@ namespace L1_3.Scripts.Game.Gameplay.Subsequence
             SubsequenceHandler subsequenceHandler, 
             SceneSwitcherService sceneSwitcherService,
             ICoroutinesPerformer coroutinesPerformer,
+            SubsequenceGameConditionProcessor conditionProcessor,
             GameplaySceneContext gameplaySceneContext)
         {
             _subsequenceHandler = subsequenceHandler;
@@ -27,6 +29,7 @@ namespace L1_3.Scripts.Game.Gameplay.Subsequence
             
             _sceneSwitcherService = sceneSwitcherService;
             _coroutinesPerformer = coroutinesPerformer;
+            _conditionProcessor = conditionProcessor;
             
             _gameplaySceneContext = gameplaySceneContext;
         }
@@ -51,13 +54,13 @@ namespace L1_3.Scripts.Game.Gameplay.Subsequence
 
         private void OnWin()
         {
-            Debug.Log("Вы победили");
+            _conditionProcessor.ProcessWin();
             Debug.Log("Нажмите Space для перезапуска");
         }
 
         private void OnLose()
         {
-            Debug.Log("Вы проиграли");
+            _conditionProcessor.ProcessLose();
             Debug.Log("Нажмите Space для перезапуска");
         }
     }

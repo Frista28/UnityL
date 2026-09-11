@@ -3,6 +3,7 @@ using System.Collections;
 using L1_3.Scripts.Game.DI;
 using L1_3.Scripts.Game.Gameplay.Subsequence;
 using L1_3.Scripts.Game.Utilities.CoroutineManagement;
+using L1_3.Scripts.Game.Utilities.DataManagement.DataProvider;
 using L1_3.Scripts.Game.Utilities.SceneManagement;
 using UnityEngine;
 
@@ -47,7 +48,9 @@ namespace L1_3.Scripts.Game.Infrastructure.Gameplay
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 SceneSwitcherService sceneSwitcherService = _container.Resolve<SceneSwitcherService>();
+                PlayerDataProvider playerDataProvider = _container.Resolve<PlayerDataProvider>();
                 ICoroutinesPerformer coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
+                coroutinesPerformer.StartPerform(playerDataProvider.Save());
                 coroutinesPerformer.StartPerform(sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu, new SceneContext()));
             }
             

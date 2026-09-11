@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using L1_3.Scripts.Game.Gameplay.Subsequence.Config;
+using L1_3.Scripts.Game.Systems.Wallet.Configs;
 using L1_3.Scripts.Game.Utilities.AssetsManagement;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace L1_3.Scripts.Game.Utilities.ConfigsManagement
         private Dictionary<Type, string> _configsResourcesPaths = new()
         {
             [typeof(SubsequenceConfigs)] = "Gameplay/Configs/Subsequence/SubsequenceConfigs",
+            [typeof(StartWalletConfig)] = "Configs/Systems/Wallet/StartWalletConfig",
         };
 
         public ResourcesConfigsLoader(ResourcesAssetsLoader resources)

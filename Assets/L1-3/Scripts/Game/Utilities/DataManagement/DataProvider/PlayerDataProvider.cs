@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using L1_3.Scripts.Game.Systems.Score;
 using L1_3.Scripts.Game.Systems.Wallet;
 using L1_3.Scripts.Game.Systems.Wallet.Configs;
 using L1_3.Scripts.Game.Utilities.ConfigsManagement;
@@ -24,6 +25,7 @@ namespace L1_3.Scripts.Game.Utilities.DataManagement.DataProvider
             return new PlayerData()
             {
                 WalletData = InitWalletData(),
+                Scores = InitScoreData(),
             };
         }
 
@@ -37,6 +39,16 @@ namespace L1_3.Scripts.Game.Utilities.DataManagement.DataProvider
                 walletData[currencyType] = walletConfig.GetValueFor(currencyType);
 
             return walletData;
+        }
+        
+        private Dictionary<ScoreTypes, int> InitScoreData()
+        {
+            Dictionary<ScoreTypes, int> scoreData = new();
+
+            foreach (ScoreTypes scoreTypes in Enum.GetValues(typeof(ScoreTypes)))
+                scoreData[scoreTypes] = 0;
+
+            return scoreData;
         }
     }
 }
