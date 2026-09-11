@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using L1_3.Scripts.Game.Gameplay.Menu.Configs;
 using L1_3.Scripts.Game.Gameplay.Subsequence.Config;
 using L1_3.Scripts.Game.Systems.Wallet.Configs;
 using L1_3.Scripts.Game.Utilities.AssetsManagement;
@@ -16,6 +17,7 @@ namespace L1_3.Scripts.Game.Utilities.ConfigsManagement
         {
             [typeof(SubsequenceConfigs)] = "Gameplay/Configs/Subsequence/SubsequenceConfigs",
             [typeof(StartWalletConfig)] = "Configs/Systems/Wallet/StartWalletConfig",
+            [typeof(MenuSystemConfig)] = "Configs/Menu/MenuSystemConfig",
         };
 
         public ResourcesConfigsLoader(ResourcesAssetsLoader resources)

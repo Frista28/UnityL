@@ -32,6 +32,9 @@ namespace L1_3.Scripts.Game.Gameplay.Subsequence
         {
             _scoreCounter.Add(ScoreTypes.Lose);
             
+            if (_walletService.Enough(CurrencyTypes.Gold, _subsequenceConfigs.LoseGold))
+                _walletService.Spend(CurrencyTypes.Gold, _subsequenceConfigs.LoseGold);
+            
             Debug.Log("Вы проиграли");
             Debug.Log($"Ваш счёт {_scoreCounter.Get(ScoreTypes.Win)}/{_scoreCounter.Get(ScoreTypes.Lose)}");
         }

@@ -8,6 +8,7 @@ namespace L1_3.Scripts.Game.Gameplay.Subsequence.Config
     {
         [field: SerializeField] public int Length { get; private set; }
         [field: SerializeField] public int WinGold { get; private set; }
+        [field: SerializeField] public int LoseGold { get; private set; }
         
         [field: SerializeField] public SubsequenceConfig Numbers { get; private set; }
         

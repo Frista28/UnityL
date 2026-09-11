@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: SubsequenceConfigs
   m_EditorClassIdentifier: 
   <Length>k__BackingField: 6
+  <WinGold>k__BackingField: 5
+  <LoseGold>k__BackingField: 1
   <Numbers>k__BackingField: {fileID: 11400000, guid: 7291e3d3ac9bfe743b353f792cac2f10,
     type: 2}
   <Chars>k__BackingField: {fileID: 11400000, guid: 9ddd5844edb3a2348b0a4b42a492e2ee,
