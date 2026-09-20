@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace L1_3.Scripts.Game.DI
 {
-    public class DIContainer
+    public class DIContainer : IDisposable
     {
         private readonly Dictionary<Type, Registration> _container = new();
 
@@ -68,7 +68,15 @@ namespace L1_3.Scripts.Game.DI
             {
                 if (registration.IsNonLazy)
                     registration.CreateInstanceFrom(this);
+                
+                registration.OnInitialize();
             }
+        }
+        
+        public void Dispose()
+        {
+            foreach (Registration registration in _container.Values)
+                registration.OnDispose();
         }
     }
 }

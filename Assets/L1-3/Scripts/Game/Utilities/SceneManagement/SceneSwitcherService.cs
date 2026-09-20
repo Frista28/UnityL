@@ -11,6 +11,8 @@ namespace L1_3.Scripts.Game.Utilities.SceneManagement
         private readonly SceneLoaderService _sceneLoaderService;
         private readonly ILoadingScreen _loadingScreen;
         private readonly DIContainer _globalContainer;
+        
+        private DIContainer _currentSceneContainer;
 
         public SceneSwitcherService(
             SceneLoaderService sceneLoaderService, 
@@ -25,6 +27,8 @@ namespace L1_3.Scripts.Game.Utilities.SceneManagement
         public IEnumerator ProcessSwitchTo(Scenes sceneName, SceneContext sceneContext)
         {
             _loadingScreen.Show();
+            
+            _currentSceneContainer?.Dispose();
 
             yield return _sceneLoaderService.LoadAsync(sceneName);
 
@@ -35,9 +39,11 @@ namespace L1_3.Scripts.Game.Utilities.SceneManagement
             if (sceneBootstrap == null)
                 throw new InvalidOperationException(nameof(sceneBootstrap) + " not found");
 
-            DIContainer sceneContainer = new DIContainer(_globalContainer);
+            _currentSceneContainer = new DIContainer(_globalContainer);
 
-            sceneBootstrap.ProcessRegistrations(sceneContainer, sceneContext);
+            sceneBootstrap.ProcessRegistrations(_currentSceneContainer, sceneContext);
+            
+            _currentSceneContainer.Initialize();
 
             yield return sceneBootstrap.Initialize();
 
