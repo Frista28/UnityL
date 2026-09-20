@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using L1_3.Scripts.Game.DI;
 using L1_3.Scripts.Game.Systems.Score;
 using L1_3.Scripts.Game.Systems.Wallet;
+using L1_3.Scripts.Game.UI.Core;
 using L1_3.Scripts.Game.Utilities.AssetsManagement;
 using L1_3.Scripts.Game.Utilities.ConfigsManagement;
 using L1_3.Scripts.Game.Utilities.CoroutineManagement;
@@ -44,7 +45,12 @@ namespace L1_3.Scripts.Game.Infrastructure.EntryPoint
             container.RegisterAsSingle(CreateWalletService).NonLazy();
             
             container.RegisterAsSingle(CreateScoreCounter).NonLazy();
+
+            container.RegisterAsSingle(CreateViewsFactory);
         }
+        
+        private static ViewsFactory CreateViewsFactory(DIContainer container)
+            => new ViewsFactory(container.Resolve<ResourcesAssetsLoader>());
 
         private static ScoreCounter CreateScoreCounter(DIContainer container)
         {
