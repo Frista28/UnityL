@@ -13,6 +13,7 @@ namespace L1_3.Scripts.Game.UI.Core
         private readonly Dictionary<ViewTypes, string> _viewIDToResourcesPath = new Dictionary<ViewTypes, string>()
         {
             {ViewTypes.CurrencyView, "UI/Wallet/CurrencyView" },
+            {ViewTypes.ScoreView, "UI/Score/ScoreView" },
             {ViewTypes.MainMenuScreenView, "UI/MainMenu/MainMenuScreenView" },
         };
 

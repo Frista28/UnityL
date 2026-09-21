@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using L1_3.Scripts.Game.Utilities.DataManagement.DataProvider;
 using L1_3.Scripts.Game.Utilities.DataManagement.SaveData;
 using L1_3.Scripts.Game.Utilities.Reactive;
@@ -18,13 +19,9 @@ namespace L1_3.Scripts.Game.Systems.Score
             playerDataProvider.RegisterReader(this);
         }
 
-        public int Get(ScoreTypes scoreType)
-        {
-            if (!_scores.TryGetValue(scoreType, out var score))
-                throw new InvalidOperationException("Score type " + scoreType + " not supported");
-            
-            return score.Value;
-        }
+        public int GetScoreValue(ScoreTypes scoreType) => _scores[scoreType].Value;
+        
+        public IReadOnlyVariable<int> GetScore(ScoreTypes scoreType) => _scores[scoreType];
 
         public void Add(ScoreTypes scoreType)
         {

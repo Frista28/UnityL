@@ -47,7 +47,12 @@ namespace L1_3.Scripts.Game.Infrastructure.EntryPoint
             container.RegisterAsSingle(CreateScoreCounter).NonLazy();
 
             container.RegisterAsSingle(CreateViewsFactory);
+            
+            container.RegisterAsSingle(CreateGlobalPresentersFactory);
         }
+        
+        private static GlobalPresentersFactory CreateGlobalPresentersFactory(DIContainer container)
+            => new GlobalPresentersFactory(container);
         
         private static ViewsFactory CreateViewsFactory(DIContainer container)
             => new ViewsFactory(container.Resolve<ResourcesAssetsLoader>());

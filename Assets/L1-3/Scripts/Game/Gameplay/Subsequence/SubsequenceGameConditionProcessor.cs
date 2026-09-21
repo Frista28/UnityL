@@ -25,7 +25,7 @@ namespace L1_3.Scripts.Game.Gameplay.Subsequence
             _walletService.Add(CurrencyTypes.Gold, _subsequenceConfigs.WinGold);
             
             Debug.Log("Вы победили");
-            Debug.Log($"Ваш счёт {_scoreCounter.Get(ScoreTypes.Win)}/{_scoreCounter.Get(ScoreTypes.Lose)}");
+            Debug.Log($"Ваш счёт {_scoreCounter.GetScoreValue(ScoreTypes.Win)}/{_scoreCounter.GetScoreValue(ScoreTypes.Lose)}");
         }
 
         public void ProcessLose()
@@ -36,7 +36,7 @@ namespace L1_3.Scripts.Game.Gameplay.Subsequence
                 _walletService.Spend(CurrencyTypes.Gold, _subsequenceConfigs.LoseGold);
             
             Debug.Log("Вы проиграли");
-            Debug.Log($"Ваш счёт {_scoreCounter.Get(ScoreTypes.Win)}/{_scoreCounter.Get(ScoreTypes.Lose)}");
+            Debug.Log($"Ваш счёт {_scoreCounter.GetScoreValue(ScoreTypes.Win)}/{_scoreCounter.GetScoreValue(ScoreTypes.Lose)}");
         }
     }
 }

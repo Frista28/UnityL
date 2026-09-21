@@ -50,32 +50,18 @@ namespace L1_3.Scripts.Game.Gameplay.Menu
                 _coroutinesPerformer.StartPerform(_sceneSwitcherService.ProcessSwitchTo(Scenes.Gameplay, new GameplaySceneContext(SubsequenceType.Chars)));
                 return;
             }
-
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                Debug.Log($"Ваш счёт {_scoreCounter.Get(ScoreTypes.Win)}/{_scoreCounter.Get(ScoreTypes.Lose)}");
-                Debug.Log($"Золото {_walletService.GetCurrency(CurrencyTypes.Gold).Value}");
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                bool enoughGold = _walletService.Enough(CurrencyTypes.Gold, _menuSystemConfig.ResetCost);
-
-                if (enoughGold)
-                    Reset();
-                else
-                    Debug.Log($"У вас недостаточно средвтсв, ваше золото - {_walletService.GetCurrency(CurrencyTypes.Gold).Value} из {_menuSystemConfig.ResetCost}");
-            }
         }
         
-        private void Reset()
+        public void TryReset()
         {
+            if (!_walletService.Enough(CurrencyTypes.Gold, _menuSystemConfig.ResetCost))
+                return;
+            
             _walletService.Spend(CurrencyTypes.Gold, _menuSystemConfig.ResetCost);
             _scoreCounter.Reset();
             _coroutinesPerformer.StartPerform(_playerDataProvider.Save());
             
             Debug.Log("Сброс прогресса");
-            Debug.Log($"Теперь ваш счёт {_scoreCounter.Get(ScoreTypes.Win)}/{_scoreCounter.Get(ScoreTypes.Lose)} и золото {_walletService.GetCurrency(CurrencyTypes.Gold).Value}");
         }
     }
 }

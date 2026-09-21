@@ -3,6 +3,7 @@
     public enum ViewTypes
     {
         CurrencyView,
+        ScoreView,
         MainMenuScreenView,
     }
 }
