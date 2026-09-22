@@ -38,9 +38,9 @@ namespace L1_3.Scripts.Game.UI.Score
                 scoresDisposable.Dispose();
         }
 
-        private void OnWinScoreChanged(int arg1, int newValue) => UpdateScore(newValue, _scoreCounter.GetScoreValue(ScoreTypes.Win));
+        private void OnWinScoreChanged(int arg1, int newValue) => UpdateScore(newValue, _scoreCounter.GetScoreValue(ScoreTypes.Lose));
         
-        private void OnLoseScoreChanged(int arg1, int newValue) => UpdateScore(_scoreCounter.GetScoreValue(ScoreTypes.Lose), newValue);
+        private void OnLoseScoreChanged(int arg1, int newValue) => UpdateScore(_scoreCounter.GetScoreValue(ScoreTypes.Win), newValue);
 
         private void UpdateScore(int win, int lose) => _view.SetText(win.ToString() + "/" + lose.ToString());
     }
