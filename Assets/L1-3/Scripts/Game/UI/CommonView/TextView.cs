@@ -9,5 +9,7 @@ namespace L1_3.Scripts.Game.UI.CommonView
         [SerializeField] private TMP_Text _text;
 
         public void SetText(string text) => _text.text = text;
+        
+        public void SetColor(Color color) => _text.color = color;
     }
 }

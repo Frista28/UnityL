@@ -5,5 +5,6 @@
         CurrencyView,
         ScoreView,
         MainMenuScreenView,
+        GameplayScreenView,
     }
 }

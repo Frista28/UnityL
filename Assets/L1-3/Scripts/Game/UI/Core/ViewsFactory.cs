@@ -15,6 +15,7 @@ namespace L1_3.Scripts.Game.UI.Core
             {ViewTypes.CurrencyView, "UI/Wallet/CurrencyView" },
             {ViewTypes.ScoreView, "UI/Score/ScoreView" },
             {ViewTypes.MainMenuScreenView, "UI/MainMenu/MainMenuScreenView" },
+            {ViewTypes.GameplayScreenView, "UI/Gameplay/GameplayScreenView" },
         };
 
         public ViewsFactory(ResourcesAssetsLoader resourcesAssetsLoader)

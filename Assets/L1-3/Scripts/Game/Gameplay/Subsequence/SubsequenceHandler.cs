@@ -1,4 +1,5 @@
 ﻿using System;
+using L1_3.Scripts.Game.Utilities.Reactive;
 using UnityEngine;
 
 namespace L1_3.Scripts.Game.Gameplay.Subsequence
@@ -10,7 +11,9 @@ namespace L1_3.Scripts.Game.Gameplay.Subsequence
         
         private readonly SubsequenceGenerator _subsequenceGenerator;
         
-        private string _subsequence;
+        private readonly ReactiveVariable<string> _subsequence = new();
+        private readonly ReactiveVariable<string> _currentSubsequence = new();
+        
         private int _currentIndex;
         
         private bool _isRunning;
@@ -20,11 +23,15 @@ namespace L1_3.Scripts.Game.Gameplay.Subsequence
             _subsequenceGenerator = subsequenceGenerator;
         }
         
+        public IReadOnlyVariable<string> Subsequence => _subsequence;
+        
+        public IReadOnlyVariable<string> CurrentSubsequence => _currentSubsequence;
+        
         public bool IsCompleted => !_isRunning;
 
-        public string Generate(SubsequenceType subsequenceType)
+        public IReadOnlyVariable<string> Generate(SubsequenceType subsequenceType)
         {
-            _subsequence = _subsequenceGenerator.Generate(subsequenceType);
+            _subsequence.Value = _subsequenceGenerator.Generate(subsequenceType);
             _isRunning = true;
             return _subsequence;
         }
@@ -37,12 +44,14 @@ namespace L1_3.Scripts.Game.Gameplay.Subsequence
             
             foreach (char input in Input.inputString)
             {
-                if (input == _subsequence[_currentIndex])
+                _currentSubsequence.Value += input;
+                
+                if (input == _subsequence.Value[_currentIndex])
                 {
                     Debug.Log(input);
                     _currentIndex++;
 
-                    if (_currentIndex >= _subsequence.Length)
+                    if (_currentIndex >= _subsequence.Value.Length)
                     {
                         _isRunning = false;
                         Win?.Invoke();

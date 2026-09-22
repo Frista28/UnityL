@@ -34,7 +34,7 @@ namespace L1_3.Scripts.Game.Gameplay.Subsequence
             _gameplaySceneContext = gameplaySceneContext;
         }
 
-        public void Start(SubsequenceType subsequenceType) => Debug.Log(_subsequenceHandler.Generate(subsequenceType));
+        public void Start(SubsequenceType subsequenceType) => Debug.Log(_subsequenceHandler.Generate(subsequenceType).Value);
 
         public void Update()
         {
