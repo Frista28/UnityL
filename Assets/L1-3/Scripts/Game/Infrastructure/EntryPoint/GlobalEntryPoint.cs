@@ -49,7 +49,7 @@ namespace L1_3.Scripts.Game.Infrastructure.EntryPoint
 
             // loadingScreen.Hide();
             
-            yield return container.Resolve<SceneSwitcherService>().ProcessSwitchTo(Scenes.MainMenu, new SceneContext());
+            yield return container.Resolve<SceneSwitcherService>().ProcessSwitchTo(Scenes.L4Gameplay, new SceneContext());
         }
     }
 }

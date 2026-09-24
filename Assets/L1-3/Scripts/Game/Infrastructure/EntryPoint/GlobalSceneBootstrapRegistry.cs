@@ -4,6 +4,7 @@ using L1_3.Scripts.Game.Infrastructure.Gameplay;
 using L1_3.Scripts.Game.Infrastructure.MainMenu;
 using L1_3.Scripts.Game.Utilities.AssetsManagement;
 using L1_3.Scripts.Game.Utilities.SceneManagement;
+using L4.Develop.Gameplay.Infrastructure;
 using Object = UnityEngine.Object;
 
 namespace L1_3.Scripts.Game.Infrastructure.EntryPoint
@@ -16,6 +17,20 @@ namespace L1_3.Scripts.Game.Infrastructure.EntryPoint
             
             sceneBootstrapRegistry.Register(Scenes.Gameplay, CreateGameplaySceneBootstrap(container));
             sceneBootstrapRegistry.Register(Scenes.MainMenu, CreateMainMenuSceneBootstrap(container));
+            sceneBootstrapRegistry.Register(Scenes.L4Gameplay, CreateL4GameplaySceneBootstrap(container));
+        }
+        
+        private static Func<ISceneBootstrap> CreateL4GameplaySceneBootstrap(DIContainer container)
+        {
+            return () =>
+            {
+                ResourcesAssetsLoader resourcesAssetsLoader = container.Resolve<ResourcesAssetsLoader>();
+
+                L4GameplayBootstrap gameplayBootstrap =
+                    resourcesAssetsLoader.Load<L4GameplayBootstrap>("Gameplay/Bootstraps/L4GameplayBootstrap");
+
+                return Object.Instantiate(gameplayBootstrap);
+            };
         }
 
         private static Func<ISceneBootstrap> CreateGameplaySceneBootstrap(DIContainer container)

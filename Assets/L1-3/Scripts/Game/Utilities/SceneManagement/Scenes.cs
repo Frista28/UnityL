@@ -5,5 +5,6 @@
         GameEntryPoint = 0,
         MainMenu = 1,
         Gameplay = 2,
+        L4Gameplay = 3,
     }
 }
