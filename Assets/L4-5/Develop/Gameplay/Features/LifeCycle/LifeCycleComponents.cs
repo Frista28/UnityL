@@ -1,0 +1,35 @@
+﻿using L1_3.Scripts.Game.Utilities.Reactive;
+using L4.Develop.Gameplay.EntitiesCore;
+
+namespace L4_5.Develop.Gameplay.Features.LifeCycle
+{
+    public class CurrentHealth : IEntityComponent
+    {
+        public ReactiveVariable<float> Value;
+    }
+    
+    public class MaxHealth : IEntityComponent
+    {
+        public ReactiveVariable<float> Value;
+    }
+    
+    public class IsDead : IEntityComponent
+    {
+        public ReactiveVariable<bool> Value;
+    }
+    
+    public class DeathProcessInitialTime : IEntityComponent
+    {
+        public ReactiveVariable<float> Value;
+    }
+
+    public class DeathProcessCurrentTime : IEntityComponent
+    {
+        public ReactiveVariable<float> Value;
+    }
+
+    public class InDeathProcess : IEntityComponent
+    {
+        public ReactiveVariable<bool> Value;
+    }
+}

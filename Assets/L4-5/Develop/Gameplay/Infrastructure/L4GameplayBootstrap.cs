@@ -2,6 +2,7 @@
 using L1_3.Scripts.Game.DI;
 using L1_3.Scripts.Game.Infrastructure;
 using L1_3.Scripts.Game.Utilities.SceneManagement;
+using L4_5.Develop.Gameplay.Features.LifeCycle;
 using L4.Develop.Gameplay.EntitiesCore;
 using L4.Develop.Gameplay.Features.MovementFeature;
 using UnityEngine;
@@ -38,7 +39,7 @@ namespace L4.Develop.Gameplay.Infrastructure
         public void Run()
         {
             _entity = _entitiesFactory.CreateRigidbodyEntity(Vector3.zero);
-            _entity2 = _entitiesFactory.CreateCharacterEntity(Vector3.right);
+            // _entity2 = _entitiesFactory.CreateCharacterEntity(Vector3.right);
             
             _running = true;
         }
@@ -48,13 +49,19 @@ namespace L4.Develop.Gameplay.Infrastructure
             if (!_running)
                 return;
             
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                _entity.GetComponent<CurrentHealth>().Value.Value -= 50f;
+                Debug.Log("Текущий уровень здоровья: " + _entity.GetComponent<CurrentHealth>().Value.Value);
+            }
+            
             Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
 
             _entity.GetComponent<MoveDirection>().Value.Value = input;
             _entity.GetComponent<RotateDirection>().Value.Value = input;
             
-            _entity2.GetComponent<MoveDirection>().Value.Value = input;
-            _entity2.GetComponent<RotateDirection>().Value.Value = input;
+            // _entity2.GetComponent<MoveDirection>().Value.Value = input;
+            // _entity2.GetComponent<RotateDirection>().Value.Value = input;
             
             _entitiesLifeContext.Update(Time.fixedDeltaTime);
         }

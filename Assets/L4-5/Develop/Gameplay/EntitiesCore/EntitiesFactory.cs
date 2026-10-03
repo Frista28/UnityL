@@ -1,5 +1,7 @@
 ﻿using L1_3.Scripts.Game.DI;
 using L1_3.Scripts.Game.Utilities.Reactive;
+using L4_5.Develop.Gameplay.Features.LifeCycle;
+using L4_5.Develop.Gameplay.Utilities.Conditions;
 using L4.Develop.Gameplay.EntitiesCore.Mono;
 using L4.Develop.Gameplay.Features.MovementFeature;
 using UnityEngine;
@@ -30,11 +32,30 @@ namespace L4.Develop.Gameplay.EntitiesCore
                 .AddComponent(new MoveDirection() { Value = new ReactiveVariable<Vector3>(Vector3.forward) })
                 .AddComponent(new MoveSpeed() { Value = new ReactiveVariable<float>(10) })
                 .AddComponent(new RotateDirection() { Value = new ReactiveVariable<Vector3>(Vector3.forward) })
-                .AddComponent(new RotateSpeed() { Value = new ReactiveVariable<float>(300) });
+                .AddComponent(new RotateSpeed() { Value = new ReactiveVariable<float>(300) })
+                .AddComponent(new MaxHealth() { Value = new ReactiveVariable<float>(100) })
+                .AddComponent(new CurrentHealth() { Value = new ReactiveVariable<float>(100) })
+                .AddComponent(new IsDead() { Value =  new ReactiveVariable<bool>(false) })
+                .AddComponent(new InDeathProcess() { Value =  new ReactiveVariable<bool>(false) })
+                .AddComponent(new DeathProcessInitialTime() { Value = new ReactiveVariable<float>(2) })
+                .AddComponent(new DeathProcessCurrentTime() { Value = new ReactiveVariable<float>() });
+            
+            ICompositeCondition canMove = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+            
+            ICompositeCondition canRotate = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            entity
+                .AddCanMove(canMove)
+                .AddCanRotate(canRotate);
 
             entity
                 .AddSystem(new RigidbodyMovementSystem())
-                .AddSystem(new RigidbodyRotatorSystem());
+                .AddSystem(new RigidbodyRotatorSystem())
+                .AddSystem(new DeathSystem())
+                .AddSystem(new DeathProcessTimerSystem())
+                .AddSystem(new SelfReleaseSystem(_entitiesLifeContext));
             
             _entitiesLifeContext.Add(entity);
 
