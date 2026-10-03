@@ -2,6 +2,71 @@ namespace L4.Develop.Gameplay.EntitiesCore
 {
 	public partial class Entity
 	{
+		public L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportRequest TeleportRequestC => GetComponent<L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportRequest>();
+
+		public L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent TeleportRequest => TeleportRequestC.Value;
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddTeleportRequest()
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportRequest() { Value = new L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent() }); 
+		}
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddTeleportRequest(L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent value)
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportRequest() {Value = value}); 
+		}
+
+		public L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportEvent TeleportEventC => GetComponent<L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportEvent>();
+
+		public L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent<UnityEngine.Vector3> TeleportEvent => TeleportEventC.Value;
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddTeleportEvent()
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportEvent() { Value = new L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent<UnityEngine.Vector3>() }); 
+		}
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddTeleportEvent(L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent<UnityEngine.Vector3> value)
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportEvent() {Value = value}); 
+		}
+
+		public L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportCost TeleportCostC => GetComponent<L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportCost>();
+
+		public L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single> TeleportCost => TeleportCostC.Value;
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddTeleportCost()
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportCost() { Value = new L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddTeleportCost(L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportCost() {Value = value}); 
+		}
+
+		public L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportRadius TeleportRadiusC => GetComponent<L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportRadius>();
+
+		public L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single> TeleportRadius => TeleportRadiusC.Value;
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddTeleportRadius()
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportRadius() { Value = new L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddTeleportRadius(L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportRadius() {Value = value}); 
+		}
+
+		public L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.CanTeleport CanTeleportC => GetComponent<L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.CanTeleport>();
+
+		public L4_5.Develop.Gameplay.Utilities.Conditions.ICompositeCondition CanTeleport => CanTeleportC.Value;
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddCanTeleport(L4_5.Develop.Gameplay.Utilities.Conditions.ICompositeCondition value)
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.CanTeleport() {Value = value}); 
+		}
+
 		public L4_5.Develop.Gameplay.Features.LifeCycle.CurrentHealth CurrentHealthC => GetComponent<L4_5.Develop.Gameplay.Features.LifeCycle.CurrentHealth>();
 
 		public L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single> CurrentHealth => CurrentHealthC.Value;
@@ -86,6 +151,43 @@ namespace L4.Develop.Gameplay.EntitiesCore
 			return AddComponent(new L4_5.Develop.Gameplay.Features.LifeCycle.InDeathProcess() {Value = value}); 
 		}
 
+		public L4_5.Develop.Gameplay.Features.ApplyDamage.TakeDamageRequest TakeDamageRequestC => GetComponent<L4_5.Develop.Gameplay.Features.ApplyDamage.TakeDamageRequest>();
+
+		public L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent<System.Single> TakeDamageRequest => TakeDamageRequestC.Value;
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddTakeDamageRequest()
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.ApplyDamage.TakeDamageRequest() { Value = new L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent<System.Single>() }); 
+		}
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddTakeDamageRequest(L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent<System.Single> value)
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.ApplyDamage.TakeDamageRequest() {Value = value}); 
+		}
+
+		public L4_5.Develop.Gameplay.Features.ApplyDamage.TakeDamageEvent TakeDamageEventC => GetComponent<L4_5.Develop.Gameplay.Features.ApplyDamage.TakeDamageEvent>();
+
+		public L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent<System.Single> TakeDamageEvent => TakeDamageEventC.Value;
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddTakeDamageEvent()
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.ApplyDamage.TakeDamageEvent() { Value = new L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent<System.Single>() }); 
+		}
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddTakeDamageEvent(L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent<System.Single> value)
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.ApplyDamage.TakeDamageEvent() {Value = value}); 
+		}
+
+		public L4_5.Develop.Gameplay.Features.ApplyDamage.CanApplyDamage CanApplyDamageC => GetComponent<L4_5.Develop.Gameplay.Features.ApplyDamage.CanApplyDamage>();
+
+		public L4_5.Develop.Gameplay.Utilities.Conditions.ICompositeCondition CanApplyDamage => CanApplyDamageC.Value;
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddCanApplyDamage(L4_5.Develop.Gameplay.Utilities.Conditions.ICompositeCondition value)
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.ApplyDamage.CanApplyDamage() {Value = value}); 
+		}
+
 		public L4.Develop.Gameplay.Features.MovementFeature.MoveDirection MoveDirectionC => GetComponent<L4.Develop.Gameplay.Features.MovementFeature.MoveDirection>();
 
 		public L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<UnityEngine.Vector3> MoveDirection => MoveDirectionC.Value;
@@ -158,6 +260,48 @@ namespace L4.Develop.Gameplay.EntitiesCore
 		public L4.Develop.Gameplay.EntitiesCore.Entity AddCanRotate(L4_5.Develop.Gameplay.Utilities.Conditions.ICompositeCondition value)
 		{
 			return AddComponent(new L4.Develop.Gameplay.Features.MovementFeature.CanRotate() {Value = value}); 
+		}
+
+		public L4.Develop.Gameplay.Features.MovementFeature.MoveEnergyMax MoveEnergyMaxC => GetComponent<L4.Develop.Gameplay.Features.MovementFeature.MoveEnergyMax>();
+
+		public L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single> MoveEnergyMax => MoveEnergyMaxC.Value;
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddMoveEnergyMax()
+		{
+			return AddComponent(new L4.Develop.Gameplay.Features.MovementFeature.MoveEnergyMax() { Value = new L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddMoveEnergyMax(L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new L4.Develop.Gameplay.Features.MovementFeature.MoveEnergyMax() {Value = value}); 
+		}
+
+		public L4.Develop.Gameplay.Features.MovementFeature.MoveEnergyCurrent MoveEnergyCurrentC => GetComponent<L4.Develop.Gameplay.Features.MovementFeature.MoveEnergyCurrent>();
+
+		public L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single> MoveEnergyCurrent => MoveEnergyCurrentC.Value;
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddMoveEnergyCurrent()
+		{
+			return AddComponent(new L4.Develop.Gameplay.Features.MovementFeature.MoveEnergyCurrent() { Value = new L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddMoveEnergyCurrent(L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new L4.Develop.Gameplay.Features.MovementFeature.MoveEnergyCurrent() {Value = value}); 
+		}
+
+		public L4.Develop.Gameplay.Features.MovementFeature.MoveEnergyRecovery MoveEnergyRecoveryC => GetComponent<L4.Develop.Gameplay.Features.MovementFeature.MoveEnergyRecovery>();
+
+		public L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single> MoveEnergyRecovery => MoveEnergyRecoveryC.Value;
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddMoveEnergyRecovery()
+		{
+			return AddComponent(new L4.Develop.Gameplay.Features.MovementFeature.MoveEnergyRecovery() { Value = new L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddMoveEnergyRecovery(L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new L4.Develop.Gameplay.Features.MovementFeature.MoveEnergyRecovery() {Value = value}); 
 		}
 
 		public L4.Develop.Gameplay.EntitiesCommon.RigidbodyComponent RigidbodyC => GetComponent<L4.Develop.Gameplay.EntitiesCommon.RigidbodyComponent>();

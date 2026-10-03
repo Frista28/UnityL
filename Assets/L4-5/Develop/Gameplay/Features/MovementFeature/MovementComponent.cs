@@ -34,4 +34,19 @@ namespace L4.Develop.Gameplay.Features.MovementFeature
     {
         public ICompositeCondition Value;
     }
+
+    public class MoveEnergyMax : IEntityComponent
+    {
+        public ReactiveVariable<float> Value;
+    }
+
+    public class MoveEnergyCurrent : IEntityComponent
+    {
+        public ReactiveVariable<float> Value;
+    }
+
+    public class MoveEnergyRecovery : IEntityComponent
+    {
+        public ReactiveVariable<float> Value;
+    }
 }

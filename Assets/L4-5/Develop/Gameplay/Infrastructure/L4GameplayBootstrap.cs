@@ -18,6 +18,7 @@ namespace L4.Develop.Gameplay.Infrastructure
         
         private Entity _entity;
         private Entity _entity2;
+        private Entity _teleportEntity;
         
         private bool _running;
         
@@ -38,8 +39,10 @@ namespace L4.Develop.Gameplay.Infrastructure
 
         public void Run()
         {
-            _entity = _entitiesFactory.CreateRigidbodyEntity(Vector3.zero);
+            // _entity = _entitiesFactory.CreateRigidbodyEntity(Vector3.zero);
             // _entity2 = _entitiesFactory.CreateCharacterEntity(Vector3.right);
+
+            _teleportEntity = _entitiesFactory.CreateTeleportEntity(Vector3.zero);
             
             _running = true;
         }
@@ -49,19 +52,24 @@ namespace L4.Develop.Gameplay.Infrastructure
             if (!_running)
                 return;
             
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                _entity.GetComponent<CurrentHealth>().Value.Value -= 50f;
-                Debug.Log("Текущий уровень здоровья: " + _entity.GetComponent<CurrentHealth>().Value.Value);
-            }
-            
-            Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
-
-            _entity.GetComponent<MoveDirection>().Value.Value = input;
-            _entity.GetComponent<RotateDirection>().Value.Value = input;
+            // if (Input.GetKeyDown(KeyCode.Space))
+            // {
+            //     _entity.TakeDamageRequest.Invoke(50);
+            //     Debug.Log("Текущий уровень здоровья: " + _entity.GetComponent<CurrentHealth>().Value.Value);
+            // }
+            //
+            // Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
+            //
+            // _entity.GetComponent<MoveDirection>().Value.Value = input;
+            // _entity.GetComponent<RotateDirection>().Value.Value = input;
             
             // _entity2.GetComponent<MoveDirection>().Value.Value = input;
             // _entity2.GetComponent<RotateDirection>().Value.Value = input;
+            
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                _teleportEntity.TeleportRequest.Invoke();
+            }
             
             _entitiesLifeContext.Update(Time.fixedDeltaTime);
         }
