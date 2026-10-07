@@ -1,9 +1,12 @@
 ﻿using L1_3.Scripts.Game.DI;
 using L1_3.Scripts.Game.Utilities.Reactive;
+using L4_5.Develop.Gameplay.EntitiesCore;
 using L4_5.Develop.Gameplay.Features.ApplyDamage;
 using L4_5.Develop.Gameplay.Features.LifeCycle;
 using L4_5.Develop.Gameplay.Features.MovementFeature;
 using L4_5.Develop.Gameplay.Features.MovementFeature.Teleport;
+using L4_5.Develop.Gameplay.Features.Sensors;
+using L4_5.Develop.Gameplay.Utilities;
 using L4_5.Develop.Gameplay.Utilities.Conditions;
 using L4.Develop.Gameplay.EntitiesCore.Mono;
 using L4.Develop.Gameplay.Features.MovementFeature;
@@ -15,7 +18,7 @@ namespace L4.Develop.Gameplay.EntitiesCore
     {
         private readonly DIContainer _container;
         private readonly EntitiesLifeContext _entitiesLifeContext;
-
+        private readonly CollidersRegistryService _collidersRegistryService;
         private readonly MonoEntitiesFactory _monoEntitiesFactory;
         
         public EntitiesFactory(DIContainer container)
@@ -23,6 +26,7 @@ namespace L4.Develop.Gameplay.EntitiesCore
             _container = container;
             _entitiesLifeContext = container.Resolve<EntitiesLifeContext>();
             _monoEntitiesFactory = container.Resolve<MonoEntitiesFactory>();
+            _collidersRegistryService = container.Resolve<CollidersRegistryService>();
         }
         
         public Entity CreateRigidbodyEntity(Vector3 position)
@@ -32,10 +36,10 @@ namespace L4.Develop.Gameplay.EntitiesCore
             _monoEntitiesFactory.Create(entity, position, "Gameplay/Entities/EntityRigidbody");
 
             entity
-                .AddComponent(new MoveDirection() { Value = new ReactiveVariable<Vector3>(Vector3.forward) })
+                /*.AddComponent(new MoveDirection() { Value = new ReactiveVariable<Vector3>(Vector3.forward) })
                 .AddComponent(new MoveSpeed() { Value = new ReactiveVariable<float>(10) })
                 .AddComponent(new RotateDirection() { Value = new ReactiveVariable<Vector3>(Vector3.forward) })
-                .AddComponent(new RotateSpeed() { Value = new ReactiveVariable<float>(300) })
+                .AddComponent(new RotateSpeed() { Value = new ReactiveVariable<float>(300) })*/
                 .AddComponent(new MaxHealth() { Value = new ReactiveVariable<float>(100) })
                 .AddComponent(new CurrentHealth() { Value = new ReactiveVariable<float>(100) })
                 .AddComponent(new IsDead() { Value =  new ReactiveVariable<bool>(false) })
@@ -60,8 +64,8 @@ namespace L4.Develop.Gameplay.EntitiesCore
                 .AddCanApplyDamage(canApplyDamage);
 
             entity
-                .AddSystem(new RigidbodyMovementSystem())
-                .AddSystem(new RigidbodyRotatorSystem())
+                /*.AddSystem(new RigidbodyMovementSystem())
+                .AddSystem(new RigidbodyRotatorSystem())*/
                 .AddSystem(new ApplyDamageSystem())
                 .AddSystem(new DeathSystem())
                 .AddSystem(new DeathProcessTimerSystem())
@@ -97,7 +101,7 @@ namespace L4.Develop.Gameplay.EntitiesCore
         {
             Entity entity = new Entity();
             
-            _monoEntitiesFactory.Create(entity, position, "Gameplay/Entities/EntityCharacter");
+            _monoEntitiesFactory.Create(entity, position, "Gameplay/Entities/EntityRigidbody");
 
             entity
                 .AddTeleportRequest()
@@ -106,7 +110,11 @@ namespace L4.Develop.Gameplay.EntitiesCore
                 .AddMoveEnergyCurrent(new ReactiveVariable<float>() { Value = 100f })
                 .AddTeleportCost(new ReactiveVariable<float>() { Value = 20f })
                 .AddTeleportRadius(new ReactiveVariable<float>() { Value = 5f })
-                .AddMoveEnergyRecovery(new ReactiveVariable<float>() { Value = 5f });
+                .AddMoveEnergyRecovery(new ReactiveVariable<float>() { Value = 5f })
+                .AddContactsDetectingMask(1 << LayerMask.NameToLayer("Character"))
+                .AddContactCollidersBuffer(new Buffer<Collider>(64))
+                .AddContactEntitiesBuffer(new Buffer<Entity>(64))
+                .AddSphereColliderRadius(new ReactiveVariable<float>(2));
             
             ICompositeCondition canTeleport = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.MoveEnergyCurrent.Value >= entity.TeleportCost.Value));
@@ -117,7 +125,9 @@ namespace L4.Develop.Gameplay.EntitiesCore
             entity
                 .AddSystem(new MoveEnergyTimeRecoverSystem())
                 .AddSystem(new TeleportSystem())
-                .AddSystem(new TeleportSpendMoveEnergySystem());
+                .AddSystem(new TeleportSpendMoveEnergySystem())
+                .AddSystem(new SphereContactsTeleportDetectingSystem())
+                .AddSystem(new SphereContactsTeleportFilterSystem(_collidersRegistryService));
             
             _entitiesLifeContext.Add(entity);
 

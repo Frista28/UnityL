@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using L1_3.Scripts.Game.DI;
 using L1_3.Scripts.Game.Utilities.AssetsManagement;
+using L4_5.Develop.Gameplay.EntitiesCore;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -13,12 +14,18 @@ namespace L4.Develop.Gameplay.EntitiesCore.Mono
 
         private readonly EntitiesLifeContext _entitiesLifeContext;
         
+        private readonly CollidersRegistryService _collidersRegistryService;
+        
         private readonly Dictionary<Entity, MonoEntity> _entityToMono = new();
 
-        public MonoEntitiesFactory(ResourcesAssetsLoader resources, EntitiesLifeContext entitiesLifeContext)
+        public MonoEntitiesFactory(
+            ResourcesAssetsLoader resources, 
+            EntitiesLifeContext entitiesLifeContext,
+            CollidersRegistryService collidersRegistryService)
         {
             _resources = resources;
             _entitiesLifeContext = entitiesLifeContext;
+            _collidersRegistryService = collidersRegistryService;
         }
 
         public MonoEntity Create(Entity entity, Vector3 position, string path)
@@ -27,7 +34,9 @@ namespace L4.Develop.Gameplay.EntitiesCore.Mono
             
             MonoEntity viewInstance = Object.Instantiate(prefab, position, Quaternion.identity, null);
             
-            viewInstance.Setup(entity);
+            viewInstance.Initialize(_collidersRegistryService);
+            
+            viewInstance.Link(entity);
             
             _entityToMono.Add(entity, viewInstance);
             

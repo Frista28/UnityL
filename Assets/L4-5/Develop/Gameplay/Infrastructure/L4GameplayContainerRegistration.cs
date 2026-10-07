@@ -1,5 +1,6 @@
 ﻿using L1_3.Scripts.Game.DI;
 using L1_3.Scripts.Game.Utilities.AssetsManagement;
+using L4_5.Develop.Gameplay.EntitiesCore;
 using L4.Develop.Gameplay.EntitiesCore;
 using L4.Develop.Gameplay.EntitiesCore.Mono;
 
@@ -11,6 +12,7 @@ namespace L4.Develop.Gameplay.Infrastructure
         {
             container.RegisterAsSingle(CreateEntitiesFactory);
             container.RegisterAsSingle(CreateEntitiesLifeContext);
+            container.RegisterAsSingle(CreateCollidersRegistryService);
             container.RegisterAsSingle(CreateMonoEntitiesFactory).NonLazy();
         }
 
@@ -18,7 +20,13 @@ namespace L4.Develop.Gameplay.Infrastructure
         {
             return new MonoEntitiesFactory(
                 container.Resolve<ResourcesAssetsLoader>(),
-                container.Resolve<EntitiesLifeContext>());
+                container.Resolve<EntitiesLifeContext>(),
+                container.Resolve<CollidersRegistryService>());
+        }
+
+        private static CollidersRegistryService CreateCollidersRegistryService(DIContainer container)
+        {
+            return new CollidersRegistryService();
         }
 
         private static EntitiesLifeContext CreateEntitiesLifeContext(DIContainer container)

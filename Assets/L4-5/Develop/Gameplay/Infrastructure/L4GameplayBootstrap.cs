@@ -39,7 +39,10 @@ namespace L4.Develop.Gameplay.Infrastructure
 
         public void Run()
         {
-            // _entity = _entitiesFactory.CreateRigidbodyEntity(Vector3.zero);
+            _entitiesFactory.CreateRigidbodyEntity(new Vector3(3,0,0));
+            _entitiesFactory.CreateRigidbodyEntity(new Vector3(-3,0,0));
+            _entitiesFactory.CreateRigidbodyEntity(new Vector3(0,0,3));
+            _entitiesFactory.CreateRigidbodyEntity(new Vector3(0,0,-3));
             // _entity2 = _entitiesFactory.CreateCharacterEntity(Vector3.right);
 
             _teleportEntity = _entitiesFactory.CreateTeleportEntity(Vector3.zero);
