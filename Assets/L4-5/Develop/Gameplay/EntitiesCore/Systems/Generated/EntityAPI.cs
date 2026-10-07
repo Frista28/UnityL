@@ -381,5 +381,19 @@ namespace L4.Develop.Gameplay.EntitiesCore
 			return AddComponent(new L4_5.Develop.Gameplay.Features.ApplyDamage.CanApplyDamage() {Value = value}); 
 		}
 
+		public L4_5.Develop.Gameplay.Features.ApplyDamage.TeleportDamage.TeleportContactDamage TeleportContactDamageC => GetComponent<L4_5.Develop.Gameplay.Features.ApplyDamage.TeleportDamage.TeleportContactDamage>();
+
+		public L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single> TeleportContactDamage => TeleportContactDamageC.Value;
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddTeleportContactDamage()
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.ApplyDamage.TeleportDamage.TeleportContactDamage() { Value = new L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddTeleportContactDamage(L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.ApplyDamage.TeleportDamage.TeleportContactDamage() {Value = value}); 
+		}
+
 	}
 }

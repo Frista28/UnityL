@@ -2,6 +2,7 @@
 using L1_3.Scripts.Game.Utilities.Reactive;
 using L4_5.Develop.Gameplay.EntitiesCore;
 using L4_5.Develop.Gameplay.Features.ApplyDamage;
+using L4_5.Develop.Gameplay.Features.ApplyDamage.TeleportDamage;
 using L4_5.Develop.Gameplay.Features.LifeCycle;
 using L4_5.Develop.Gameplay.Features.MovementFeature;
 using L4_5.Develop.Gameplay.Features.MovementFeature.Teleport;
@@ -114,7 +115,8 @@ namespace L4.Develop.Gameplay.EntitiesCore
                 .AddContactsDetectingMask(1 << LayerMask.NameToLayer("Character"))
                 .AddContactCollidersBuffer(new Buffer<Collider>(64))
                 .AddContactEntitiesBuffer(new Buffer<Entity>(64))
-                .AddSphereColliderRadius(new ReactiveVariable<float>(2));
+                .AddSphereColliderRadius(new ReactiveVariable<float>(2))
+                .AddTeleportContactDamage(new ReactiveVariable<float>(50f));
             
             ICompositeCondition canTeleport = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.MoveEnergyCurrent.Value >= entity.TeleportCost.Value));
@@ -127,7 +129,8 @@ namespace L4.Develop.Gameplay.EntitiesCore
                 .AddSystem(new TeleportSystem())
                 .AddSystem(new TeleportSpendMoveEnergySystem())
                 .AddSystem(new SphereContactsTeleportDetectingSystem())
-                .AddSystem(new SphereContactsTeleportFilterSystem(_collidersRegistryService));
+                .AddSystem(new SphereContactsTeleportFilterSystem(_collidersRegistryService))
+                .AddSystem(new DealDamageOnTeleportContactSystem());
             
             _entitiesLifeContext.Add(entity);
 
