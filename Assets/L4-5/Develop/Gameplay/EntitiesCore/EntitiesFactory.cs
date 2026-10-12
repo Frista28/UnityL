@@ -1,6 +1,7 @@
 ﻿using L1_3.Scripts.Game.DI;
 using L1_3.Scripts.Game.Utilities.Reactive;
 using L4_5.Develop.Gameplay.EntitiesCore;
+using L4_5.Develop.Gameplay.Features.AI;
 using L4_5.Develop.Gameplay.Features.ApplyDamage;
 using L4_5.Develop.Gameplay.Features.ApplyDamage.TeleportDamage;
 using L4_5.Develop.Gameplay.Features.LifeCycle;
@@ -85,7 +86,7 @@ namespace L4.Develop.Gameplay.EntitiesCore
 
             entity
                 .AddComponent(new MoveDirection() { Value = new ReactiveVariable<Vector3>(Vector3.forward) })
-                .AddComponent(new MoveSpeed() { Value = new ReactiveVariable<float>(2) })
+                .AddComponent(new MoveSpeed() { Value = new ReactiveVariable<float>(10) })
                 .AddComponent(new RotateDirection() { Value = new ReactiveVariable<Vector3>(Vector3.forward) })
                 .AddComponent(new RotateSpeed() { Value = new ReactiveVariable<float>(300) });
 
@@ -110,13 +111,14 @@ namespace L4.Develop.Gameplay.EntitiesCore
                 .AddMoveEnergyMax(new ReactiveVariable<float>() { Value = 100f })
                 .AddMoveEnergyCurrent(new ReactiveVariable<float>() { Value = 100f })
                 .AddTeleportCost(new ReactiveVariable<float>() { Value = 20f })
-                .AddTeleportRadius(new ReactiveVariable<float>() { Value = 5f })
-                .AddMoveEnergyRecovery(new ReactiveVariable<float>() { Value = 5f })
+                .AddTeleportRadius(new ReactiveVariable<float>() { Value = 10f })
+                .AddMoveEnergyRecovery(new ReactiveVariable<float>() { Value = 2f })
                 .AddContactsDetectingMask(1 << LayerMask.NameToLayer("Character"))
                 .AddContactCollidersBuffer(new Buffer<Collider>(64))
                 .AddContactEntitiesBuffer(new Buffer<Entity>(64))
                 .AddSphereColliderRadius(new ReactiveVariable<float>(2))
-                .AddTeleportContactDamage(new ReactiveVariable<float>(50f));
+                .AddTeleportContactDamage(new ReactiveVariable<float>(50f))
+                .AddCurrentTarget(new ReactiveVariable<Entity>());
             
             ICompositeCondition canTeleport = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.MoveEnergyCurrent.Value >= entity.TeleportCost.Value));
@@ -126,6 +128,7 @@ namespace L4.Develop.Gameplay.EntitiesCore
 
             entity
                 .AddSystem(new MoveEnergyTimeRecoverSystem())
+                .AddSystem(new MinHpCurrentTargetSystem(_entitiesLifeContext))
                 .AddSystem(new TeleportSystem())
                 .AddSystem(new TeleportSpendMoveEnergySystem())
                 .AddSystem(new SphereContactsTeleportDetectingSystem())

@@ -2,6 +2,7 @@
 using L1_3.Scripts.Game.DI;
 using L1_3.Scripts.Game.Infrastructure;
 using L1_3.Scripts.Game.Utilities.SceneManagement;
+using L4_5.Develop.Gameplay.Features.AI;
 using L4_5.Develop.Gameplay.Features.LifeCycle;
 using L4.Develop.Gameplay.EntitiesCore;
 using L4.Develop.Gameplay.Features.MovementFeature;
@@ -15,6 +16,8 @@ namespace L4.Develop.Gameplay.Infrastructure
         private EntitiesFactory _entitiesFactory;
         
         private EntitiesLifeContext _entitiesLifeContext;
+        private AIBrainsContext _aiBrainsContext;
+        private BrainsFactory _brainsFactory;
         
         private Entity _entity;
         private Entity _entity2;
@@ -30,6 +33,8 @@ namespace L4.Develop.Gameplay.Infrastructure
             _entitiesFactory = _container.Resolve<EntitiesFactory>();
             
             _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
+            _aiBrainsContext = _container.Resolve<AIBrainsContext>();
+            _brainsFactory = _container.Resolve<BrainsFactory>();
         }
 
         public IEnumerator Initialize()
@@ -44,8 +49,12 @@ namespace L4.Develop.Gameplay.Infrastructure
             _entitiesFactory.CreateRigidbodyEntity(new Vector3(0,0,3));
             _entitiesFactory.CreateRigidbodyEntity(new Vector3(0,0,-3));
             // _entity2 = _entitiesFactory.CreateCharacterEntity(Vector3.right);
+            
+            /*_entity2 = _entitiesFactory.CreateCharacterEntity(Vector3.zero);
+            _brainsFactory.CreateGhostBrain(_entity2);*/
 
             _teleportEntity = _entitiesFactory.CreateTeleportEntity(Vector3.zero);
+            _brainsFactory.CreateTeleportGhostBrain(_teleportEntity);
             
             _running = true;
         }
@@ -54,6 +63,8 @@ namespace L4.Develop.Gameplay.Infrastructure
         {
             if (!_running)
                 return;
+            
+            _aiBrainsContext.Update(Time.deltaTime);
             
             // if (Input.GetKeyDown(KeyCode.Space))
             // {
@@ -69,12 +80,12 @@ namespace L4.Develop.Gameplay.Infrastructure
             // _entity2.GetComponent<MoveDirection>().Value.Value = input;
             // _entity2.GetComponent<RotateDirection>().Value.Value = input;
             
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                _teleportEntity.TeleportRequest.Invoke();
-            }
+            // if (Input.GetKeyDown(KeyCode.Space))
+            // {
+            //     _teleportEntity.TeleportRequest.Invoke();
+            // }
             
-            _entitiesLifeContext.Update(Time.fixedDeltaTime);
+            _entitiesLifeContext.Update(Time.deltaTime);
         }
     }
 }

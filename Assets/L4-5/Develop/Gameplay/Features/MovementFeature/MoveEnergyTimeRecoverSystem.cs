@@ -23,7 +23,7 @@ namespace L4_5.Develop.Gameplay.Features.MovementFeature
         }
         
         public void OnUpdate(float deltaTime)
-        {
+        {Debug.Log(_moveEnergyCurrent.Value);
             if (_moveEnergyCurrent.Value >= _moveEnergyMax.Value)
             {
                 _timer = 0;

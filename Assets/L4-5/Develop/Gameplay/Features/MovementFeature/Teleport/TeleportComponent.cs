@@ -7,7 +7,7 @@ namespace L4_5.Develop.Gameplay.Features.MovementFeature.Teleport
 {
     public class TeleportRequest : IEntityComponent
     {
-        public ReactiveEvent Value;
+        public ReactiveEvent<Vector3> Value;
     }
     
     public class TeleportEvent : IEntityComponent

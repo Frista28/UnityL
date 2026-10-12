@@ -12,6 +12,13 @@ namespace L4_5.Develop.Gameplay.Utilities.StateMachineCore
         private StateNode<TState> _currentState;
 
         private bool _isRunning;
+        
+        private List<IDisposable> _disposables;
+
+        protected StateMachine(List<IDisposable> disposables)
+        {
+            _disposables = new List<IDisposable>(disposables);
+        }
 
         protected TState CurrentState => _currentState.State;
         
@@ -38,7 +45,11 @@ namespace L4_5.Develop.Gameplay.Utilities.StateMachineCore
                     break;
                 }
             }
+            
+            UpdateLogic(deltaTime);
         }
+        
+        protected abstract void UpdateLogic(float deltaTime);
         
         public void Dispose()
         {
@@ -49,6 +60,11 @@ namespace L4_5.Develop.Gameplay.Utilities.StateMachineCore
                     disposableState.Dispose();
             
             _states.Clear();
+            
+            foreach (IDisposable disposable in _disposables)
+                disposable.Dispose();
+
+            _disposables.Clear();
         }
         
         public void Enter()

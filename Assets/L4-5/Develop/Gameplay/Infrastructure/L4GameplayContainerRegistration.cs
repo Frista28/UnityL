@@ -1,6 +1,7 @@
 ﻿using L1_3.Scripts.Game.DI;
 using L1_3.Scripts.Game.Utilities.AssetsManagement;
 using L4_5.Develop.Gameplay.EntitiesCore;
+using L4_5.Develop.Gameplay.Features.AI;
 using L4.Develop.Gameplay.EntitiesCore;
 using L4.Develop.Gameplay.EntitiesCore.Mono;
 
@@ -13,7 +14,19 @@ namespace L4.Develop.Gameplay.Infrastructure
             container.RegisterAsSingle(CreateEntitiesFactory);
             container.RegisterAsSingle(CreateEntitiesLifeContext);
             container.RegisterAsSingle(CreateCollidersRegistryService);
+            container.RegisterAsSingle(CreateBrainsFactory);
+            container.RegisterAsSingle(CreateAIBrainsContext);
             container.RegisterAsSingle(CreateMonoEntitiesFactory).NonLazy();
+        }
+        
+        private static AIBrainsContext CreateAIBrainsContext(DIContainer container)
+        {
+            return new AIBrainsContext();
+        }
+
+        private static BrainsFactory CreateBrainsFactory(DIContainer container)
+        {
+            return new BrainsFactory(container);
         }
 
         private static MonoEntitiesFactory CreateMonoEntitiesFactory(DIContainer container)

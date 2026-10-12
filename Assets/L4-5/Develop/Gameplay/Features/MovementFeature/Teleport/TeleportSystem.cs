@@ -5,13 +5,12 @@ using L4.Develop.Gameplay.EntitiesCommon;
 using L4.Develop.Gameplay.EntitiesCore;
 using L4.Develop.Gameplay.EntitiesCore.Systems;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace L4_5.Develop.Gameplay.Features.MovementFeature.Teleport
 {
     public class TeleportSystem : IInitializableSystem, IDisposableSystem
     {
-        private ReactiveEvent _teleportRequest;
+        private ReactiveEvent<Vector3> _teleportRequest;
         private ReactiveEvent<Vector3> _teleportEvent;
         
         private ReactiveVariable<float> _teleportRadius;
@@ -39,32 +38,18 @@ namespace L4_5.Develop.Gameplay.Features.MovementFeature.Teleport
             _requestDisposable.Dispose();
         }
 
-        private void OnTeleportRequest()
+        private void OnTeleportRequest(Vector3 position)
         {
             if (_canTeleport.Evaluate() == false)
                 return;
             
-            Teleport(GetTeleportRadiusPosition());
+            Teleport(position);
         }
 
         private void Teleport(Vector3 position)
         {
             _transform.position = position;
             _teleportEvent.Invoke(position);
-        }
-
-        private Vector3 GetTeleportRadiusPosition()
-        {
-            // Оставил такой телепорт, что бы далеко не убежал
-            Vector3 random = Random.insideUnitSphere * _teleportRadius.Value;
-            random.y = 0;
-            
-            return random;
-            
-            // Vector3 random = Random.insideUnitSphere * _teleportRadius.Value;
-            // random.y = 0;
-            //
-            // return _transform.position + random;
         }
     }
 }

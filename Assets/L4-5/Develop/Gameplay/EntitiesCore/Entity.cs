@@ -4,7 +4,7 @@ using L4.Develop.Gameplay.EntitiesCore.Systems;
 
 namespace L4.Develop.Gameplay.EntitiesCore
 {
-    public partial class Entity : IDisposable
+    public partial class Entity : IDisposable, IEquatable<Entity>
     {
         private readonly Dictionary<Type, IEntityComponent> _components = new Dictionary<Type, IEntityComponent>();
         
@@ -14,6 +14,8 @@ namespace L4.Develop.Gameplay.EntitiesCore
         private readonly List<IDisposableSystem> _disposables = new();
         
         private bool _isInit;
+        
+        public bool IsInit => _isInit;
 
         public void Initialize()
         {
@@ -92,5 +94,7 @@ namespace L4.Develop.Gameplay.EntitiesCore
 
             return this;
         }
+
+        public bool Equals(Entity other) => other == this;
     }
 }

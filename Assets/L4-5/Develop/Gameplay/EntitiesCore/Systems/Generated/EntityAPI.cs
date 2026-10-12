@@ -197,14 +197,14 @@ namespace L4.Develop.Gameplay.EntitiesCore
 
 		public L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportRequest TeleportRequestC => GetComponent<L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportRequest>();
 
-		public L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent TeleportRequest => TeleportRequestC.Value;
+		public L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent<UnityEngine.Vector3> TeleportRequest => TeleportRequestC.Value;
 
 		public L4.Develop.Gameplay.EntitiesCore.Entity AddTeleportRequest()
 		{
-			return AddComponent(new L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportRequest() { Value = new L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent() }); 
+			return AddComponent(new L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportRequest() { Value = new L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent<UnityEngine.Vector3>() }); 
 		}
 
-		public L4.Develop.Gameplay.EntitiesCore.Entity AddTeleportRequest(L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent value)
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddTeleportRequest(L1_3.Scripts.Game.Utilities.Reactive.ReactiveEvent<UnityEngine.Vector3> value)
 		{
 			return AddComponent(new L4_5.Develop.Gameplay.Features.MovementFeature.Teleport.TeleportRequest() {Value = value}); 
 		}
@@ -393,6 +393,20 @@ namespace L4.Develop.Gameplay.EntitiesCore
 		public L4.Develop.Gameplay.EntitiesCore.Entity AddTeleportContactDamage(L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<System.Single> value)
 		{
 			return AddComponent(new L4_5.Develop.Gameplay.Features.ApplyDamage.TeleportDamage.TeleportContactDamage() {Value = value}); 
+		}
+
+		public L4_5.Develop.Gameplay.Features.AI.CurrentTarget CurrentTargetC => GetComponent<L4_5.Develop.Gameplay.Features.AI.CurrentTarget>();
+
+		public L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<L4.Develop.Gameplay.EntitiesCore.Entity> CurrentTarget => CurrentTargetC.Value;
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddCurrentTarget()
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.AI.CurrentTarget() { Value = new L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<L4.Develop.Gameplay.EntitiesCore.Entity>() }); 
+		}
+
+		public L4.Develop.Gameplay.EntitiesCore.Entity AddCurrentTarget(L1_3.Scripts.Game.Utilities.Reactive.ReactiveVariable<L4.Develop.Gameplay.EntitiesCore.Entity> value)
+		{
+			return AddComponent(new L4_5.Develop.Gameplay.Features.AI.CurrentTarget() {Value = value}); 
 		}
 
 	}

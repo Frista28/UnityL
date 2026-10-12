@@ -41,7 +41,6 @@ namespace L4_5.Develop.Gameplay.Features.Sensors
 
         private void OnTeleportEvent(Vector3 position)
         {
-            Debug.Log(position);
             _contacts.Count = Physics.OverlapSphereNonAlloc(
                 position, 
                 _colliderRadius.Value, 
@@ -50,12 +49,6 @@ namespace L4_5.Develop.Gameplay.Features.Sensors
                 QueryTriggerInteraction.Ignore);
         
             RemoveSelfFromContacts();
-
-            Debug.Log("Контакты: " + _contacts.Count);
-            for (int i = 0; i < _contacts.Count; i++)
-            {
-                Debug.Log($"{_contacts.Items[i].name}: {_contacts.Items[i].transform.position}");
-            }
         }
 
         private void RemoveSelfFromContacts()

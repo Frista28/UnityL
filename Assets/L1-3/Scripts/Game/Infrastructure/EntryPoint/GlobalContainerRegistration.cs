@@ -15,6 +15,7 @@ using L1_3.Scripts.Game.Utilities.DataManagement.Serializer;
 using L1_3.Scripts.Game.Utilities.LoadingScreen;
 using L1_3.Scripts.Game.Utilities.Reactive;
 using L1_3.Scripts.Game.Utilities.SceneManagement;
+using L1_3.Scripts.Game.Utilities.Timer;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -49,7 +50,12 @@ namespace L1_3.Scripts.Game.Infrastructure.EntryPoint
             container.RegisterAsSingle(CreateViewsFactory);
             
             container.RegisterAsSingle(CreateGlobalPresentersFactory);
+            
+            container.RegisterAsSingle(CreateTimerService);
         }
+        
+        private static TimerServiceFactory CreateTimerService(DIContainer c)
+            => new TimerServiceFactory(c);
         
         private static GlobalPresentersFactory CreateGlobalPresentersFactory(DIContainer container)
             => new GlobalPresentersFactory(container);
